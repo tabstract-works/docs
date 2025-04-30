@@ -1,0 +1,12 @@
+@require: stdjareport
+document (|
+title = {どこでも百葉箱：分散BLE観測ネットワークの構想};
+author = {霧咲空人（きりさきあきひと）};
+|) '<
++chapter{はじめての章}<
++p{
+\SATySFi; でのはじめての段落の記述です．
+段落は \dfn{ブロックコマンド} で実現されています．
+}
+>
+>
