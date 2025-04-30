@@ -14,8 +14,8 @@ jobs:
 
       - name: Build PDFs and index using Docker
         run: |
-          docker run --rm -v ${{ github.workspace }}:/workspace amutake/satysfi:latest \
-            sh -c "cd /workspace/projects && mkdir -p /workspace/public && \
+          mkdir -p ${{ github.workspace }}/public && docker run --rm -v ${{ github.workspace }}:/workspace amutake/satysfi:latest \
+            sh -c "cd /workspace/projects && \
                   find . -name '*.saty' | while read file; do \
                     base=\$(basename \"\$file\" .saty); \
                     satysfi \"\$file\" -o \"/workspace/public/\$base.pdf\";
