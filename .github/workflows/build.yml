@@ -16,13 +16,13 @@ jobs:
         run: |
           docker run --rm -v ${{ github.workspace }}:/workspace amutake/satysfi:latest \
             sh -c "cd /workspace/projects && mkdir -p /workspace/public && \
-                  echo '<!DOCTYPE html><html><head><meta charset=UTF-8><title>Documents</title></head><body><h1>Available Documents</h1><ul>' > /workspace/public/index.html && \
                   find . -name '*.saty' | while read file; do \
                     base=\$(basename \"\$file\" .saty); \
-                    satysfi \"\$file\" -o \"/workspace/public/\$base.pdf\" && \
-                    echo \"<li><a href='\$base.pdf'>\$base.pdf</a></li>\" >> /workspace/public/index.html; \
-                  done && \
-                  echo '</ul></body></html>' >> /workspace/public/index.html"
+                    satysfi \"\$file\" -o \"/workspace/public/\$base.pdf\";
+                  done"
+
+      - name: Copy website sources
+        run: cd /workspace/src && cp ./* /workspace/public/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
