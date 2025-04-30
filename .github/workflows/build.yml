@@ -22,7 +22,7 @@ jobs:
                   done"
 
       - name: Copy website sources
-        run: cd ${{ github.workspace }}/workspace/src && cp ./* ${{ github.workspace }}/workspace/public/
+        run: cd ${{ github.workspace }}/src && cp ./* ${{ github.workspace }}/public/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
