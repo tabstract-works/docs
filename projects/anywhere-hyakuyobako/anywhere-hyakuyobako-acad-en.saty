@@ -1,0 +1,122 @@
+@require: stdjareport
+@require: itemize
+document (|
+title = {Anywhere Hyakuyobako: Construction and Application of Distributed Weather Observation System by BLE-Advertise};
+author = {Akihito Kirisaki};
+date = {2025-04-30};
+|) '<
+
++chapter{Abstract}<
+  +p{
+    This study proposes "Anywhere-Hyohyobako," a distributed weather observation system that does not require any communication infrastructure. 
+    The system consists of autonomous sensor nodes that periodically transmit environmental data—such as temperature, humidity, and pressure—via Bluetooth Low Energy (BLE) advertising,
+    and mobile devices or dedicated gateways that receive the data. 
+    Each node is powered by a solar panel and a rechargeable battery, enabling flexible deployment in diverse locations including urban areas, agricultural fields, and both indoor and outdoor environments without the need for power or internet access.
+  }
+  +p{
+    Furthermore, the system incorporates a method where images taken during sensor installation are analyzed using machine learning to estimate metadata that describes the installation environment. 
+    This approach helps ensure the reliability and accuracy of observed weather data, even under non-standard conditions. 
+    This paper outlines the system architecture, communication protocols, data acquisition and correction methods, and discusses its potential applications as a citizen-participatory observation network.
+  }
+>
+
++chapter{Introduction}<
+  +p{
+    Monitoring microclimates in urban environments is increasingly important for addressing issues such as heat island effects, heatstroke prevention, and disaster response.
+    However, conventional weather observation systems often suffer from limitations in spatial resolution due to high installation costs and infrastructure requirements.
+    While sensor networks that incorporate citizen participation are gaining popularity, challenges related to communication environments and power supply remain.
+  }
+  +p{
+    This study aims to overcome these limitations by developing an observation infrastructure that is easy to
+    install and facilitates the aggregation and utilization of environmental data.
+  }
+>
+
++chapter{System Architecture and Features}<
+  +p{
+    The proposed system consists of the following three components:
+    \listing{
+      * Sensor Node (M5Stamp Pico + ENV Unit): Equipped with periodic BLE advertising, autonomous power supply, and device ID functionality.
+      * Receiver Device (e.g., smartphones, ESP32, Raspberry Pi): Scans for BLE packets and forwards received data to the cloud via the internet.
+      * Cloud Platform (e.g., Supabase): Provides time-series data storage, spatial filtering, and a visualization dashboard.
+    }%
+    Since the system operates solely on BLE proximity communication without requiring any additional network infrastructure,
+    it can function even in remote areas or locations without cellular coverage.
+    In addition, users can participate in the observation network simply by installing a mobile app,
+    making the system highly accessible compared to conventional solutions.
+  }
+
++chapter{Environmental Mapping via Image Analysis}<
+  +p{
+    The installation environment significantly affects sensor readings.
+    To address this, the system includes a machine learning-based analysis feature
+    that uses images taken during installation to estimate contextual metadata.
+    The following environmental attributes are automatically inferred:
+    \listing{
+      * Indoor / Outdoor
+      * Ground / Wall / Elevated
+      * Presence or absence of direct sunlight
+      * Surface material (estimated)
+    }%
+    The inferred metadata is stored alongside the observation data and is used for correction during analysis.
+    This enables consistent and statistically sound interpretations even under non-standard installation conditions.
+  }
+>
+
++chapter{Data Structure and Spatial Representation}<
+  +p{
+    The observation data are recorded in a structured format
+    that includes sensor ID, timestamp, location, and environmental metadata.
+    The location information is encoded using the H3 spatial index system,
+    allowing aggregation at uniform spatial resolutions.
+    This supports urban-scale heatmap visualizations and time-based trend analysis.
+  }
+  +p{
+    Moreover, external access is supported via an API,
+    enabling the data to be used in statistical analysis or as inputs for machine learning models.
+  }
+>
+
++chapter{Integration with Citizen Science and Applications}<
+  +p{
+    The system requires no specialized equipment or knowledge, allowing easy participation from citizens.
+    In educational settings, it can serve as a hands-on learning tool that covers everything from sensor assembly
+    and deployment to data visualization and analysis.
+    It can also raise public awareness about local environmental issues.
+  }
+  +p{
+    From a research perspective, the system can be applied to studies of urban microclimates,
+    high-resolution spatial interpolation of weather patterns, and real-time disaster monitoring.
+  }
+>
+
++chapter{Future Work}<
+  +p{
+    Although the current system focuses on temperature, humidity, and atmospheric pressure, future enhancements are planned as follows:
+    \listing{
+      * Integration of additional sensors (e.g., light intensity, CO₂ concentration)
+      * Improved environmental mapping through advanced machine learning models
+      * International deployment targeting disaster-prone or infrastructure-limited regions
+    }%
+  }
+>
+
++chapter{Conclusion}<
+  +p{
+    This paper presented the concept and implementation of "Anywhere-Hyohyobako,"
+    a non-infrastructure-dependent sensor network based on BLE advertising.
+    Future work includes field testing to evaluate observation accuracy and feasibility of social implementation,
+    with the goal of establishing a new weather observation infrastructure that connects academia, public sectors, and citizen communities.
+  }
+>
+
++chapter{Contact}<
+  +listing{
+    * Representative: Akihito Kirisaki（霧咲空人）
+    * Email: kirisaki\@klara.works
+    * GitHub: https://github.com/tabstract-works
+    * Project Documentation: https://tabstract-works.github.io/docs/
+  }
+>
+>
+>
