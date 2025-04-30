@@ -14,11 +14,11 @@ jobs:
 
       - name: Build PDFs using Docker
         run: |
-          docker run --rm -v ${{ github.workspace }}:/satysfi amutake/satysfi:latest \
-            sh -c "cd projects && mkdir -p public && \
-                   for file in anywhere-hyakuyobako/*.saty; do \
-                     base=$(basename \"$file\" .saty); \
-                     satysfi \"$file\" -o \"public/${base}.pdf\"; \
+          docker run --rm -v ${{ github.workspace }}:/workspace amutake/satysfi:latest \
+            sh -c "cd /workspace/projects && mkdir -p /workspace/public && \
+                   find . -name '*.saty' | while read file; do \
+                     base=\$(basename \"\$file\" .saty); \
+                     satysfi \"\$file\" -o \"/workspace/public/\$base.pdf\"; \
                    done"
 
       - name: Generate index.html
