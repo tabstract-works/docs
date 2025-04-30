@@ -1,0 +1,37 @@
+name: Build SATySFi Documents
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build PDFs using Docker
+        run: |
+          docker run --rm -v ${{ github.workspace }}:/satysfi amutake/satysfi:latest \
+            sh -c "cd /satysfi && mkdir -p public && \
+                   for file in anywhere-hyakuyobako/*.saty; do \
+                     base=$(basename \"$file\" .saty); \
+                     satysfi \"$file\" -o \"public/${base}.pdf\"; \
+                   done"
+
+      - name: Generate index.html
+        run: |
+          echo "<!DOCTYPE html><html><head><meta charset='UTF-8'><title>Documents</title></head><body><h1>Available Documents</h1><ul>" > public/index.html
+          for pdf in public/*.pdf; do
+            name=$(basename "$pdf")
+            echo "<li><a href='$name'>$name</a></li>" >> public/index.html
+          done
+          echo "</ul></body></html>" >> public/index.html
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
